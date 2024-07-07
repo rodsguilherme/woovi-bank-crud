@@ -25,6 +25,7 @@ const routes = new Router()
 const graphQlSettingsPerReq = async (req: Request): Promise<OptionsData> => {
   const account = await getAccountFromToken(req.header.authorization)
 
+  console.log(account)
   return {
     graphiql: {
       headerEditorEnabled: true,

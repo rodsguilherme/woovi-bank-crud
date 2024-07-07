@@ -1,7 +1,7 @@
 import { createServer } from 'http'
 import app from './app'
 import { config } from './config'
-import { connectToDatabase } from './databse/database'
+import { connectToDatabase } from './database/database'
 
 async function main() {
   const server = createServer(app.callback())

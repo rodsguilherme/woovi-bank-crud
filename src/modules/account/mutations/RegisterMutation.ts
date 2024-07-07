@@ -35,7 +35,7 @@ export const RegisterMutation = mutationWithClientMutationId({
 
     await account.save()
 
-    const token = await generateToken(account.id, account._id)
+    const token = generateToken(account.id, account._id)
 
     return { token, account }
   },

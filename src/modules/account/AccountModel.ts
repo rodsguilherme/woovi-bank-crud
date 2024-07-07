@@ -41,6 +41,14 @@ const AccountSchema = new Schema({
     type: String,
     required: true,
     minlength: [8, 'Password must have at least 8 characters']
+  },
+  ledger: {
+    type: Array,
+    default: []
+  },
+  balance: {
+    type: Number,
+    default: 0
   }
 })
 

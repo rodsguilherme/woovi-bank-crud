@@ -32,18 +32,17 @@ export const createTransaction = async (
       value
     })
 
-    await Promise.all([
-      AccountModel.updateOne(
-        { id: senderId },
-        {
-          $push: {
-            ledger: { value: centsValue, date: new Date(), type: 'expense' }
-          }
-        },
-        { session }
-      ),
-      AccountModel.updateOne(
-        { id: receiverId },
+    await AccountModel.updateOne(
+      { _id: new mongoose.Types.ObjectId(senderId) },
+      {
+        $push: {
+          ledger: { value: centsValue, date: new Date(), type: 'expense' }
+        }
+      },
+      { session }
+    ),
+      await AccountModel.updateOne(
+        { _id: new mongoose.Types.ObjectId(receiverId) },
         {
           $push: {
             ledger: { value: centsValue, date: new Date(), type: 'revenue' }
@@ -51,7 +50,6 @@ export const createTransaction = async (
         },
         { session }
       )
-    ])
 
     await transaction.save({ session })
 

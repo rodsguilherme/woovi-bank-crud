@@ -12,7 +12,7 @@ export const createTransaction = async (
   senderId: string,
   receiverId: string,
   value: number
-): Promise<number> => {
+): Promise<number | undefined> => {
   const session = await mongoose.startSession()
   session.startTransaction()
 
@@ -31,7 +31,7 @@ export const createTransaction = async (
       value: valueInCents
     })
 
-    const senderAccount = await AccountModel.findByIdAndUpdate(
+    await AccountModel.updateOne(
       { _id: new mongoose.Types.ObjectId(senderId) },
       {
         $push: {
@@ -59,13 +59,11 @@ export const createTransaction = async (
 
     await transaction.save({ session })
 
-    if (!senderAccount) {
-      throw new Error('Saldo não foi atualizado')
-    }
-
     await session.commitTransaction()
 
-    return senderAccount.balance
+    const senderAccount = await AccountModel.findById(senderId)
+
+    return senderAccount?.balance
   } catch (error) {
     await session.abortTransaction()
     throw error

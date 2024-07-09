@@ -3,11 +3,16 @@ import mongoose from 'mongoose'
 import { TransactionModel } from './TransactionModel'
 import { AccountModel } from '../account/AccountModel'
 
+const convertValueToCents = (value: number): number => {
+  const cents = value * 100
+  return Math.round(cents)
+}
+
 export const createTransaction = async (
   senderId: string,
   receiverId: string,
   value: number
-) => {
+): Promise<number> => {
   const session = await mongoose.startSession()
   session.startTransaction()
 
@@ -17,39 +22,50 @@ export const createTransaction = async (
     throw new Error('Conta não encontrada')
   }
 
-  const centsValue = value
+  const valueInCents = convertValueToCents(value)
 
   try {
     const transaction = new TransactionModel({
       senderId,
       receiverId,
-      value
+      value: valueInCents
     })
 
-    await AccountModel.updateOne(
+    const senderAccount = await AccountModel.findByIdAndUpdate(
       { _id: new mongoose.Types.ObjectId(senderId) },
       {
         $push: {
-          ledger: { value: centsValue, date: new Date(), type: 'expense' }
+          ledger: { value: valueInCents, date: new Date(), type: 'expense' }
+        },
+        $inc: {
+          balance: -valueInCents
         }
       },
       { session }
-    ),
-      await AccountModel.updateOne(
-        { _id: new mongoose.Types.ObjectId(receiverId) },
-        {
-          $push: {
-            ledger: { value: centsValue, date: new Date(), type: 'revenue' }
-          }
+    )
+
+    await AccountModel.updateOne(
+      { _id: new mongoose.Types.ObjectId(receiverId) },
+      {
+        $push: {
+          ledger: { value: valueInCents, date: new Date(), type: 'revenue' }
         },
-        { session }
-      )
+        $inc: {
+          balance: valueInCents
+        }
+      },
+      { session }
+    )
 
     await transaction.save({ session })
 
+    if (!senderAccount) {
+      throw new Error('Saldo não foi atualizado')
+    }
+
     await session.commitTransaction()
 
-    return transaction
+    return senderAccount.balance
   } catch (error) {
     await session.abortTransaction()
     throw error

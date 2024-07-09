@@ -21,17 +21,23 @@ export const CreateTransactionMutation = mutationWithClientMutationId({
     { senderId, receiverId, value }: TransactionInput,
     context
   ) => {
-    // if (!context?.user) {
-    //   throw new Error('Não autorizado!')
-    // }
+    if (!context?.account) {
+      throw new Error('Não autorizado!')
+    }
 
     if (senderId === receiverId) {
       throw new Error('Não é possível transferir para si mesmo!')
     }
 
-    await createTransaction(senderId, receiverId, value)
+    const newBalance = await createTransaction(senderId, receiverId, value)
 
-    return { message: 'Valor transferido', receiverId, senderId, value }
+    return {
+      message: 'Valor transferido',
+      receiverId,
+      senderId,
+      value,
+      newBalance
+    }
   },
 
   outputFields: {
@@ -50,6 +56,10 @@ export const CreateTransactionMutation = mutationWithClientMutationId({
     value: {
       type: GraphQLString,
       resolve: ({ value }: any) => value
+    },
+    newBalance: {
+      type: GraphQLString,
+      resolve: ({ newBalance }: any) => newBalance
     }
   }
 })

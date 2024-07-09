@@ -12,14 +12,18 @@
   "license": "MIT",
   "dependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/chance": "^1.1.6",
+    "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/kcors": "^2.2.8",
     "@types/koa-logger": "^3.1.5",
     "bcrypt": "^5.1.1",
+    "chance": "^1.1.12",
     "dotenv": "^16.4.5",
     "graphql": "^16.9.0",
     "graphql-playground-middleware": "^1.1.2",
     "graphql-relay": "^0.10.1",
+    "jest": "^29.7.0",
     "jsonwebtoken": "^9.0.2",
     "kcors": "^2.2.2",
     "koa": "2.14.1",
@@ -29,7 +33,9 @@
     "koa-graphql": "^0.12.0",
     "koa-logger": "^3.2.1",
     "koa-router": "12.0.0",
-    "mongoose": "^8.4.5"
+    "mongoose": "^8.4.5",
+    "ts-jest": "^29.2.0",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@babel/cli": "7.19.3",

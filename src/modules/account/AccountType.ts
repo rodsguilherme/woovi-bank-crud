@@ -33,9 +33,9 @@ export const AccountType = new GraphQLObjectType<Account>({
   fields: () => ({
     _id: { type: GraphQLString, resolve: (account) => account._id.toString() },
     cpf: { type: GraphQLString, resolve: (account) => account.cpf.toString() },
-    pixKey: {
+    password: {
       type: GraphQLString,
-      resolve: (account) => account.pixKey.toString()
+      resolve: (account) => account.password.toString()
     },
     balance: { type: GraphQLInt, resolve: (account) => account.balance },
     ledger: { type: LedgerType, resolve: (account) => account.ledger }

@@ -4,10 +4,10 @@ import { mutationWithClientMutationId } from 'graphql-relay'
 
 import { AccountModel } from '../AccountModel'
 import { findAccountByCpf, generateToken } from '../AccountService'
+import { AccountType } from '../AccountType'
 
 type RegisterInput = {
   cpf: string
-  pixKey: string
   password: string
 }
 
@@ -16,12 +16,12 @@ export const RegisterMutation = mutationWithClientMutationId({
   description: 'Register a new account',
   inputFields: {
     cpf: { type: new GraphQLNonNull(GraphQLString) },
-    pixKey: { type: new GraphQLNonNull(GraphQLString) },
+
     password: { type: new GraphQLNonNull(GraphQLString) }
   },
 
   mutateAndGetPayload: async (registerInput: RegisterInput) => {
-    const { cpf, pixKey, password } = registerInput
+    const { cpf, password } = registerInput
 
     const userAlreadyExists = await findAccountByCpf(cpf)
 
@@ -31,7 +31,7 @@ export const RegisterMutation = mutationWithClientMutationId({
 
     const hash = await bcrypt.hash(password, 10)
 
-    const account = new AccountModel({ cpf, pixKey, password: hash })
+    const account = new AccountModel({ cpf, password: hash })
 
     await account.save()
 
@@ -43,6 +43,10 @@ export const RegisterMutation = mutationWithClientMutationId({
     token: {
       type: GraphQLString,
       resolve: ({ token }: any) => token
+    },
+    me: {
+      type: AccountType,
+      resolve: ({ account }) => account
     }
   }
 })

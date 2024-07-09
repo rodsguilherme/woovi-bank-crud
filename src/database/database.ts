@@ -3,7 +3,6 @@ import mongoose from 'mongoose'
 export async function connectToDatabase() {
   const mongoURl = process.env.MONGO_URL
 
-  console.log({ mongoURl })
   if (!mongoURl) {
     throw new Error('MONGO_URL deve estar definido no .env')
   }
@@ -16,7 +15,7 @@ export async function connectToDatabase() {
     console.log('Database connection error.', error)
   )
 
-  await mongoose.connect(mongoURl)
+  await mongoose.connect(mongoURl, { dbName: 'woovy-db' })
 
   console.log('database connected')
 }

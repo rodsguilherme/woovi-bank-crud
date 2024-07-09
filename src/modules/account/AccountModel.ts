@@ -10,7 +10,6 @@ export interface Account {
   id: string
   _id: string
   cpf: string
-  pixKey: string
   password: string
   balance: number
   ledger: Ledger
@@ -31,12 +30,6 @@ const AccountSchema = new Schema({
     type: String,
     required: true
   },
-  pixKey: {
-    type: String,
-    required: true,
-    unique: true,
-    lowercase: true
-  },
   password: {
     type: String,
     required: true,
@@ -52,7 +45,6 @@ const AccountSchema = new Schema({
   }
 })
 
-AccountSchema.index({ pixKey: 1 })
 AccountSchema.index({ cpf: 1 })
 
 export const AccountModel = mongoose.model<AccountDocumentInterface>(

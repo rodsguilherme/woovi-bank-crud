@@ -1,4 +1,4 @@
-import { graphql } from 'graphql'
+import { graphql, GraphQLError } from 'graphql'
 
 import { schema } from '@/schema/schema'
 
@@ -33,5 +33,30 @@ describe('TEST FindAccountByCpf query', () => {
     const responseAccount = response?.data?.FindAccountByCpf as any
 
     expect(responseAccount.cpf).toBe(account.cpf)
+  })
+
+  it('should throw an error if user is not authenticated', async () => {
+    const mutation = `
+      query Get($cpf: String!) {
+        FindAccountByCpf(cpf: $cpf) {
+          balance
+          cpf
+        }
+      }
+      `
+
+    const variableValues = {
+      cpf: '001.001.001-00'
+    }
+
+    const result = await graphql({
+      schema,
+      source: mutation,
+      variableValues
+    })
+
+    expect(result.errors?.[0]).toStrictEqual(
+      new GraphQLError('Não autorizado!')
+    )
   })
 })

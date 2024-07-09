@@ -4,6 +4,7 @@ import { AccountModel } from '../AccountModel'
 import { generateToken } from '../AccountService'
 
 import bcrypt from 'bcrypt'
+import { AccountType } from '../AccountType'
 
 type LoginInputType = {
   cpf: string
@@ -23,23 +24,27 @@ export const LoginMutation = mutationWithClientMutationId({
     const account = await AccountModel.findOne({ cpf })
 
     if (!account) {
-      throw Error('Cpf ou senha inválidos')
+      throw Error('Usuário ou senha incorretos')
     }
 
     const passwordIsValid = await bcrypt.compare(password, account.password)
 
     if (!passwordIsValid) {
-      throw Error('Cpf ou senha inválidos')
+      throw Error('Usuário ou senha incorretos')
     }
 
     const token = generateToken(account.id, account._id)
 
-    return { token }
+    return { token, account }
   },
   outputFields: {
     token: {
       type: GraphQLString,
       resolve: ({ token }: any) => token
+    },
+    me: {
+      type: AccountType,
+      resolve: ({ account }) => account
     }
   }
 })

@@ -6,27 +6,26 @@ import { AccountModel } from '../AccountModel'
 import { findAccountByCpf, generateToken } from '../AccountService'
 import { AccountType } from '../AccountType'
 
-type RegisterInput = {
+type CreateInput = {
   cpf: string
   password: string
 }
 
-export const RegisterMutation = mutationWithClientMutationId({
-  name: 'Register',
-  description: 'Register a new account',
+export const CreateMutation = mutationWithClientMutationId({
+  name: 'Create',
+  description: 'Create a new account',
   inputFields: {
     cpf: { type: new GraphQLNonNull(GraphQLString) },
-
     password: { type: new GraphQLNonNull(GraphQLString) }
   },
 
-  mutateAndGetPayload: async (registerInput: RegisterInput) => {
-    const { cpf, password } = registerInput
+  mutateAndGetPayload: async (createInput: CreateInput) => {
+    const { cpf, password } = createInput
 
     const userAlreadyExists = await findAccountByCpf(cpf)
 
     if (userAlreadyExists) {
-      throw new Error('Cpf já registrado')
+      throw new Error('CPF já cadastrado')
     }
 
     const hash = await bcrypt.hash(password, 10)

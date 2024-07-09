@@ -1,2 +1,2 @@
-export * from './RegisterMutation'
+export * from './CreateAccountMutation'
 export * from './LoginMutation'

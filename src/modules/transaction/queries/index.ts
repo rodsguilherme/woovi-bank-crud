@@ -1,1 +1,1 @@
-export * from './GetTransactionsByAccount'
+export * from './GetTransactionsBySenderId'

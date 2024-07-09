@@ -14,7 +14,7 @@ export async function createTransactionFixture(
   const mutation = `
     mutation Post($input: CreateTransactionInput!) {
       CreateTransactionMutation(input: $input) {
-        balance
+        newBalance
       }
     }
   `
@@ -38,7 +38,7 @@ export async function createTransactionFixture(
     }
   })
 
-  return result.data!.CreateTransactionMutation as any
+  return result.data?.CreateTransactionMutation as any
 }
 
 export const createTransactionAccount = async (balance?: number) => {

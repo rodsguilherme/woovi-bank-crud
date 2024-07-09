@@ -1,10 +1,9 @@
-import { Chance } from 'chance'
 import { graphql, GraphQLError } from 'graphql'
 import { schema } from '@/schema/schema'
 import { connectDatabase, disconnectDatabase } from '../../../../test/database'
 import { createTransactionAccount } from '../fixtures/createTransactionFixtures'
 
-describe('CreateTransactionMutation', () => {
+describe('TEST CreateTransactionMutation mutation', () => {
   beforeAll(connectDatabase)
   afterAll(disconnectDatabase)
 

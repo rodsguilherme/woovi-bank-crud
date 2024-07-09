@@ -1,57 +1,60 @@
-const path = require("path");
+const path = require('path')
 
-const webpack = require("webpack");
+const webpack = require('webpack')
 
-const WebpackNodeExternals = require("webpack-node-externals");
-const ReloadServerPlugin = require("./webpack/ReloadServerPlugin");
+const WebpackNodeExternals = require('webpack-node-externals')
+const ReloadServerPlugin = require('./webpack/ReloadServerPlugin')
 
-const cwd = process.cwd();
+const cwd = process.cwd()
 
 module.exports = {
-  mode: "development",
-  devtool: "eval-cheap-source-map",
+  mode: 'development',
+  devtool: 'eval-cheap-source-map',
   entry: {
-    server: ["./src/index.ts"],
+    server: ['./src/index.ts']
   },
   output: {
-    path: path.resolve("build"),
-    filename: "graphql.js",
+    path: path.resolve('build'),
+    filename: 'graphql.js'
   },
-  target: "node",
+  target: 'node',
   node: {
-    __dirname: true,
+    __dirname: true
   },
   externals: [
     WebpackNodeExternals({
-      allowlist: ["webpack/hot/poll?1000"],
-    }),
+      allowlist: ['webpack/hot/poll?1000']
+    })
   ],
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".json", ".mjs"],
+    extensions: ['.ts', '.tsx', '.js', '.json', '.mjs'],
+    alias: {
+      '@': path.resolve(__dirname, 'src')
+    }
   },
   module: {
     rules: [
       {
         test: /\.mjs$/,
         include: /node_modules/,
-        type: "javascript/auto",
+        type: 'javascript/auto'
       },
       {
         test: /\.(js|jsx|ts|tsx)?$/,
         use: {
-          loader: "babel-loader?cacheDirectory",
+          loader: 'babel-loader?cacheDirectory'
         },
-        exclude: [/node_modules/],
-      },
-    ],
+        exclude: [/node_modules/]
+      }
+    ]
   },
   plugins: [
     new ReloadServerPlugin({
-      script: path.resolve("build", "graphql.js"),
+      script: path.resolve('build', 'graphql.js')
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      "process.env.NODE_ENV": JSON.stringify("development"),
-    }),
-  ],
-};
+      'process.env.NODE_ENV': JSON.stringify('development')
+    })
+  ]
+}

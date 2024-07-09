@@ -3,12 +3,6 @@ import mongoose from 'mongoose'
 import { TransactionModel } from './TransactionModel'
 import { AccountModel } from '../account/AccountModel'
 
-type TransactionInputType = {
-  senderId: string
-  receiverId: string
-  value: number
-}
-
 export const createTransaction = async (
   senderId: string,
   receiverId: string,

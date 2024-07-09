@@ -6,9 +6,11 @@ export const getAccountFromToken = async (authorization?: string | null) => {
     return null
   }
 
-  const decoded = await verifyToken(authorization)
+  const [bearer, token] = authorization.split(' ')
 
-  const account = await AccountModel.findById({ id: decoded.id })
+  const decoded = await verifyToken(token)
+
+  const account = await AccountModel.findById(decoded.accountId)
 
   if (!account) {
     return null

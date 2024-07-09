@@ -10,9 +10,10 @@ export const GetTranscationByAccount: GraphQLFieldConfig<any, any, any> = {
     cpf: { type: new GraphQLNonNull(GraphQLString) }
   },
   resolve: async (_, args, context) => {
-    // if (!context?.user || args?.senderTaxId !== context?.user?.taxId) {
-    //   throw new Error('Não autorizado!')
-    // }
+    console.log({ args, context: context.account })
+    if (!context?.account || args?.cpf !== context?.account?.cpf) {
+      throw new Error('Não autorizado!')
+    }
 
     const transactions = await TransactionModel.aggregate([
       {

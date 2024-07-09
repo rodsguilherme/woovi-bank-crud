@@ -1,59 +1,45 @@
-import Koa from "koa";
-import Router from "koa-router";
-import bodyParser from "koa-bodyparser";
-import convert from "koa-convert";
-import cors from "koa-cors";
-import { koaPlayground } from "graphql-playground-middleware";
-import { graphqlHTTP } from "koa-graphql";
-import { config } from "./config";
-import { schema } from "./schema/schema";
+import cors from 'kcors'
+import Koa, { Request } from 'koa'
+import bodyParser from 'koa-bodyparser'
+import { graphqlHTTP, OptionsData } from 'koa-graphql'
+import logger from 'koa-logger'
+import Router from 'koa-router'
 
-const app = new Koa();
-const router = new Router();
+import { schema } from './schema/schema'
+import { getAccountFromToken } from './middlewares/auth-middleware'
 
-app.use(bodyParser());
-app.use(convert(cors({ maxAge: 86400, credentials: true })));
+const app = new Koa()
 
-router.get("/", (ctx) => {
-  const info = [
-    "/graphql - GraphiQL",
-    "/playground - GraphQL Playground",
-    "/status - Status server",
-  ];
-
-  ctx.status = 200;
-  ctx.body = info.join("\n");
-});
-
-router.get("/status", (ctx) => {
-  ctx.status = 200;
-  ctx.body = "running";
-});
-
-router.all(
-  "/playground",
-  koaPlayground({
-    endpoint: "/graphql",
+app.use(cors({ origin: '*' }))
+app.use(logger())
+app.use(
+  bodyParser({
+    onerror(err, ctx) {
+      ctx.throw(err, 422)
+    }
   })
-);
+)
 
-const appGraphQL = convert(
-  graphqlHTTP(async (request, response, koaContext) => {
-    return {
-      graphiql: config.NODE_ENV !== "production",
-      schema,
-      rootValue: {
-        request: koaContext.request,
-      },
-      context: {
-        koaContext,
-      },
-    };
-  })
-);
+const routes = new Router()
 
-router.all("/graphql", appGraphQL);
+const graphQlSettingsPerReq = async (req: Request): Promise<OptionsData> => {
+  const account = await getAccountFromToken(req.header.authorization)
 
-app.use(router.routes()).use(router.allowedMethods());
+  return {
+    graphiql: {
+      headerEditorEnabled: true,
+      shouldPersistHeaders: true
+    },
+    schema,
+    pretty: true,
+    context: { account }
+  }
+}
 
-export default app;
+const graphQlServer = graphqlHTTP(graphQlSettingsPerReq)
+routes.all('/graphql', graphQlServer)
+
+app.use(routes.routes())
+app.use(routes.allowedMethods())
+
+export default app

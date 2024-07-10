@@ -17,7 +17,7 @@ describe('TEST RegisterUserMutation mutation', () => {
   it('should create a new account', async () => {
     const mutation = `
       mutation Post($input: CreateInput!) {
-        CreateMutation(input: $input) {
+        CreateAccountMutation(input: $input) {
           token
           me {
             _id
@@ -39,7 +39,7 @@ describe('TEST RegisterUserMutation mutation', () => {
 
     expect(result.errors).toBeUndefined()
 
-    const { me, token } = result?.data?.CreateMutation as any
+    const { me, token } = result?.data?.CreateAccountMutation as any
 
     expect(token).toBeDefined()
     expect(me.cpf).toBe(newAccount.cpf)
@@ -48,7 +48,7 @@ describe('TEST RegisterUserMutation mutation', () => {
   it('should throw an error if the cpf is already created', async () => {
     const mutation = `
       mutation Post($input: CreateInput!) {
-        CreateMutation(input: $input) {
+        CreateAccountMutation(input: $input) {
           token
           me {
             _id

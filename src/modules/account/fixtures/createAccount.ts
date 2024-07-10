@@ -9,7 +9,7 @@ const chance = new Chance()
 export const createAccount = async (args?: Partial<Account>) => {
   const mutation = `
     mutation createAccount($input: CreateInput!) {
-        CreateMutation(input: $input) {
+        CreateAccountMutation(input: $input) {
             me {
               _id 
               cpf
@@ -31,7 +31,7 @@ export const createAccount = async (args?: Partial<Account>) => {
     variableValues
   })
 
-  const account = response?.data?.CreateMutation as any
+  const account = response?.data?.CreateAccountMutation as any
 
   return {
     _id: account?.me?._id,

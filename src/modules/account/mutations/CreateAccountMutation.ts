@@ -11,7 +11,7 @@ type CreateInput = {
   password: string
 }
 
-export const CreateMutation = mutationWithClientMutationId({
+export const CreateAccountMutation = mutationWithClientMutationId({
   name: 'Create',
   description: 'Create a new account',
   inputFields: {

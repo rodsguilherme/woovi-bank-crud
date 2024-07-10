@@ -37,6 +37,13 @@ const graphQlSettingsPerReq = async (req: Request): Promise<OptionsData> => {
 }
 
 const graphQlServer = graphqlHTTP(graphQlSettingsPerReq)
+
+routes.get('/', (ctx, next) => {
+  ctx.response.body = 'Teste api'
+
+  return next()
+})
+
 routes.all('/graphql', graphQlServer)
 
 app.use(routes.routes())

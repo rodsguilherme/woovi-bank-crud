@@ -42,7 +42,7 @@
 
 ## Deployment
 
-The application is available at: [www.google.com](google)
+The application is available at: [https://woovi-bank-crud.vercel.app](https://woovi-bank-crud.vercel.app/graphql)
 
 
 ## License

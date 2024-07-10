@@ -23,3 +23,4 @@ distTs
 # Random things to ignore
 package-lock.json
 .webpack
+.vercel

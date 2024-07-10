@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --config webpack.js",
     "start": "node build/graphql.js",
-    "dev": "concurrently \"webpack --watch --progress --config webpack.js\" \"nodemon build/graphql.js\""
+    "dev": "concurrently \"webpack --watch --progress --config webpack.js\" \"nodemon build/graphql.js\"",
+    "test": "jest --detectOpenHandles"
   },
   "author": "Guilherme Rodrigues",
   "license": "MIT",

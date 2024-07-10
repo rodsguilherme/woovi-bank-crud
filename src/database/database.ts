@@ -7,7 +7,6 @@ export async function connectToDatabase() {
     throw new Error('MONGO_URL deve estar definido no .env')
   }
 
-  console.log({ mongoURl, mongoose })
   mongoose.connection.on('close', () =>
     console.log('Database connection closed.')
   )

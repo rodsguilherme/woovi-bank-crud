@@ -6,6 +6,9 @@
             "use": "@vercel/node"
         }
     ],
+    "scripts": {
+        "build": "rimraf dist && tsc && tsc-alias"
+    },
     "routes": [
         {
             "src": "/(.*)",

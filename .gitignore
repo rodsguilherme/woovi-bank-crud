@@ -1,23 +1,4 @@
-.DS_Store
-*.sublime-project
-*.sublime-workspace
-.idea/
 
-lib-cov
-*.seed
-*.log
-*.csv
-*.dat
-*.out
-*.pid
-*.gz
-*.map
-*.icloud
-
-pids
-logs
-results
-test-results
 
 node_modules
 npm-debug.log
@@ -40,9 +21,5 @@ test/globalConfig.json
 distTs
 
 # Random things to ignore
-ignore/
 package-lock.json
-/yarn-offline-cache
-.cache
 .webpack
-globalConfig.json

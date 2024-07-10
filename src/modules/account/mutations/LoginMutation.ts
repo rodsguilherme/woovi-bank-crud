@@ -3,7 +3,7 @@ import { mutationWithClientMutationId } from 'graphql-relay'
 import { AccountModel } from '../AccountModel'
 import { generateToken } from '../AccountService'
 
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import { AccountType } from '../AccountType'
 
 type LoginInputType = {

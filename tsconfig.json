@@ -1,24 +1,25 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["./*"]
+    },
     "esModuleInterop": true,
     "skipLibCheck": true,
     "target": "es2022",
-    "allowJs": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
-    "moduleDetection": "force",
     "isolatedModules": true,
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
-    "module": "NodeNext",
-    "outDir": "dist",
     "sourceMap": true,
-    "lib": ["es2022"],
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"],
-      "test": ["./test/*"]
-    }
+    "declaration": false,
+    "outDir": "./dist",
+    "rootDir": "src",
+    "lib": ["es2022"]
   },
-  "exclude": ["node_modules", "node_modules/*"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules"]
 }

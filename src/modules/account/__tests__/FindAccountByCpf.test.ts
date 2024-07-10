@@ -2,7 +2,7 @@ import { graphql, GraphQLError } from 'graphql'
 
 import { schema } from '@/schema/schema'
 
-import { connectDatabase, disconnectDatabase } from '../../../../test/database'
+import { connectDatabase, disconnectDatabase } from '../../../test/database'
 import { createAccount } from '../fixtures/createAccount'
 
 describe('TEST FindAccountByCpf query', () => {

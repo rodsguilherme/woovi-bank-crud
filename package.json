@@ -5,19 +5,23 @@
   "main": "index.ts",
   "scripts": {
     "dev": "tsx watch ./src/index.ts",
-    "start": "tsx watch ./src/index.ts",
-    "test": "jest --detectOpenHandles"
+    "start": "node dist/index.js",
+    "test": "jest --detectOpenHandles",
+    "build": "rimraf dist && tsc && tsc-alias"
+  },
+  "engines": {
+    "node": "20.x"
   },
   "author": "Guilherme Rodrigues",
   "license": "MIT",
   "dependencies": {
-    "@types/bcrypt": "^5.0.2",
+    "@types/bcryptjs": "^2.4.6",
     "@types/chance": "^1.1.6",
     "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/kcors": "^2.2.8",
     "@types/koa-logger": "^3.1.5",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "chance": "^1.1.12",
     "dotenv": "^16.4.5",
     "graphql": "^16.9.0",
@@ -34,8 +38,10 @@
     "koa-logger": "^3.2.1",
     "koa-router": "12.0.0",
     "mongoose": "^8.4.5",
+    "rimraf": "^6.0.0",
     "ts-jest": "^29.2.0",
     "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.10",
     "tsx": "^4.16.2"
   },
   "devDependencies": {

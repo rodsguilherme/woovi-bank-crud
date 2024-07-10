@@ -1,5 +1,5 @@
 import { graphql } from 'graphql'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import Chance from 'chance'
 import { schema } from '@/schema/schema'
 import { AccountModel } from '@/modules/account/AccountModel'

@@ -1,7 +1,7 @@
 import { Chance } from 'chance'
 import { graphql, GraphQLError } from 'graphql'
 import { schema } from '@/schema/schema'
-import { connectDatabase, disconnectDatabase } from '../../../../test/database'
+import { connectDatabase, disconnectDatabase } from '../../../test/database'
 
 const chance = new Chance()
 

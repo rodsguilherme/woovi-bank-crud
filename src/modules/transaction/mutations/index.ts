@@ -1,1 +1,1 @@
-export * from './CreateTransactionMutation'
+export * from './RegisterTransactionMutation'

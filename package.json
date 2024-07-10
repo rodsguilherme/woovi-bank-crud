@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.js",
-    "start": "node build/graphql.js",
-    "dev": "concurrently \"webpack --watch --progress --config webpack.js\" \"nodemon build/graphql.js\"",
-    "test": "jest --detectOpenHandles"
+    "start": "node dist/graphql.js",
+    "dev": "concurrently \"webpack --watch --progress --config webpack.js\" \"nodemon dist/graphql.js\"",
+    "test": "jest --detectOpenHandles",
+    "add-build": "git add dist"
   },
   "author": "Guilherme Rodrigues",
   "license": "MIT",
@@ -35,6 +36,7 @@
     "koa-logger": "^3.2.1",
     "koa-router": "12.0.0",
     "mongoose": "^8.4.5",
+    "pre-commit": "^1.2.2",
     "ts-jest": "^29.2.0",
     "ts-node": "^10.9.2"
   },

@@ -14,7 +14,7 @@ module.exports = {
     server: ['./src/index.ts']
   },
   output: {
-    path: path.resolve('build'),
+    path: path.resolve('dist'),
     filename: 'graphql.js'
   },
   target: 'node',
@@ -50,7 +50,7 @@ module.exports = {
   },
   plugins: [
     new ReloadServerPlugin({
-      script: path.resolve('build', 'graphql.js')
+      script: path.resolve('dist', 'graphql.js')
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({

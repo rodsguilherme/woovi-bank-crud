@@ -15,7 +15,7 @@
 - Node.js installed
 - Yarn installed
 
-### Steps
+### Steps to run
 
 1. **Install dependencies**
 
@@ -39,6 +39,27 @@
   ```
   yarn test
   ```
+
+### How to build
+
+1. **Install dependencies**
+
+   ```
+   yarn
+   ```
+2. **Change env variables**
+   ```
+   .env.example to .env
+   ```
+
+3. **Build the server**
+   ```
+   yarn build
+   ```
+4. **Run build**
+   ```
+   yarn start
+   ```
 
 ## Deployment
 

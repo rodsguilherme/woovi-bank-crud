@@ -4,11 +4,9 @@
   "description": "graphql api for woovy test",
   "main": "index.ts",
   "scripts": {
-    "build": "webpack --config webpack.js",
-    "start": "node dist/graphql.js",
-    "dev": "concurrently \"webpack --watch --progress --config webpack.js\" \"nodemon dist/graphql.js\"",
-    "test": "jest --detectOpenHandles",
-    "add-build": "git add dist"
+    "dev": "tsx watch ./src/index.ts",
+    "start": "tsx watch ./src/index.ts",
+    "test": "jest --detectOpenHandles"
   },
   "author": "Guilherme Rodrigues",
   "license": "MIT",
@@ -37,7 +35,8 @@
     "koa-router": "12.0.0",
     "mongoose": "^8.4.5",
     "ts-jest": "^29.2.0",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "tsx": "^4.16.2"
   },
   "devDependencies": {
     "@babel/cli": "7.19.3",
